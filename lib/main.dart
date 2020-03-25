@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:varisty_shuttle_service/Content2.dart';
+//import 'package:varisty_shuttle_service/Content2.dart';
 import 'package:varisty_shuttle_service/onboardingScreen.dart';
 import 'Animations/FadeAnimation.dart';
 

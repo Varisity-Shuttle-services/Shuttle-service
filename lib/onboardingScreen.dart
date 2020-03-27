@@ -99,7 +99,7 @@ class _OnboardingscreenState extends State<Onboardingscreen> {
                       style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize:40)),
                       SizedBox(height: 15.0,),
                       Text("Students will have the ability to book the shuttle\nknow how many seats are available and SO MUCH MORE!!",
-                      style: TextStyle( color: Colors.white, fontWeight: FontWeight.w600)),
+                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.w400)),
                   ],
                 ),
                 ),

@@ -80,7 +80,7 @@ class _SignupState extends State<Signup> {
                     decoration : InputDecoration(
                       border: InputBorder.none,
                       prefixIcon: 
-                        Icon(Icons.email),
+                        Icon(Icons.lock),
                       hintStyle: TextStyle(color : Colors.grey.withOpacity(.8)),
                       hintText: "Password"
                     ),

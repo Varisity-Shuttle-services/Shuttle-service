@@ -1,5 +1,4 @@
-import 'dart:math';
-
+import 'package:form_field_validator/form_field_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -11,6 +10,21 @@ class Signup extends StatefulWidget {
 }
 
 class _SignupState extends State<Signup> {
+  final TextEditingController _pass = TextEditingController();
+  final TextEditingController _confirmPass = TextEditingController();
+
+  final _formKey1 = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
+  String password;
+  String _email;
+  final passwordValidator = MultiValidator([  
+    RequiredValidator(errorText: 'password is required'),  
+    MinLengthValidator(6, errorText: 'password must be at least 6 digits long'),  
+    PatternValidator(r'(?=.*?[#?!@$%^&*-])', errorText: 'passwords must have at least one special character') ,
+ ]); 
+ final emailValidator = EmailValidator(errorText: "Please type a correct email");
+
+
 
   Widget _buildNameField() {
     return FadeAnimation(1.2, Container(
@@ -26,7 +40,7 @@ class _SignupState extends State<Signup> {
                       prefixIcon: 
                         Icon(Icons.person),
                       hintStyle: TextStyle(color : Colors.grey.withOpacity(.8)),
-                      hintText: "Enter your name"
+                      labelText: "Enter your name"
                     ),
               ),
               ),
@@ -41,28 +55,36 @@ class _SignupState extends State<Signup> {
                 borderRadius: BorderRadius.circular(10),
                 color: Colors.white,
               ),
+              child :Form(  
+                key: _formKey,
               child: Column(
               children: <Widget>[
                 Container(
-                  child: TextField(
+                  child: TextFormField(
+                    validator: emailValidator,
                     keyboardType: TextInputType.emailAddress,
                     decoration : InputDecoration(
                       border: InputBorder.none,
                       prefixIcon: 
                         Icon(Icons.email),
                       hintStyle: TextStyle(color : Colors.grey.withOpacity(.8)),
-                      hintText: "Email"
+                      labelText: "Email"
                     ),
                   ),
                 ),
               ],
               ),
             ),
+              ),
             );
 
   }
 
   Widget _buildPasswordField(){
+    
+ 
+
+    
     return FadeAnimation(1.5, Container(
               padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
@@ -73,9 +95,16 @@ class _SignupState extends State<Signup> {
               children: <Widget>[
                 Container(
                   decoration: BoxDecoration(
-                    border : Border(bottom: BorderSide(color: Colors.grey[300]))
+                   
                   ),
-                  child: TextField(
+                  child :Form(  
+                    key: _formKey1,  
+                    child: Column(children: [  
+                    TextFormField(
+                    controller: _pass,
+                    obscureText: true,
+                    onChanged: (val) => password = val,  
+                    validator : passwordValidator,
                     keyboardType: TextInputType.emailAddress,
                     decoration : InputDecoration(
                       border: InputBorder.none,
@@ -85,11 +114,22 @@ class _SignupState extends State<Signup> {
                       hintText: "Password"
                     ),
                   ),
-                ),
+                    
+                  
+                
+                
+
                 Container(
                   decoration: BoxDecoration(
+                    border : Border(top: BorderSide(color: Colors.grey[300]))
                   ),
-                  child: TextField(
+                  child: TextFormField(
+                    controller: _confirmPass,
+                    validator: (value){
+                    if(value != _pass.text){
+                        return 'Passwords do not match';
+                      }
+                    },
                     obscureText: true,
                     decoration : InputDecoration(
                       border: InputBorder.none,
@@ -99,11 +139,24 @@ class _SignupState extends State<Signup> {
                       hintText: "Confirm your Password"
                     ),
                   ),
-                ),                
-              ],
-              ) ,
-            ),
-            );
+                ),
+                    ],
+                    ),
+                ),
+                ),
+                    
+                    ],
+              
+                    
+                    ),
+                  
+                  
+                ),
+    );
+                    
+                  
+      
+           
              
   }
   Widget _buildAddressField(){
@@ -137,7 +190,11 @@ class _SignupState extends State<Signup> {
                 ),
                 child:FlatButton(
                   onPressed: () {
-                    print('Login button pressed');
+                    if(_formKey1.currentState.validate() && _formKey.currentState.validate() ){
+                      
+                      _formKey.currentState.save();
+                      print("sign in button pressed");
+                    }
                   },
                   child :Text('Sign in',
                   style: TextStyle(color : Colors.white.withOpacity(.7), fontSize: 20.0),

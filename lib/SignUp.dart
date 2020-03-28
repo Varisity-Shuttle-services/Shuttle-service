@@ -81,10 +81,7 @@ class _SignupState extends State<Signup> {
   }
 
   Widget _buildPasswordField(){
-    
- 
-
-    
+        
     return FadeAnimation(1.5, Container(
               padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
@@ -115,10 +112,7 @@ class _SignupState extends State<Signup> {
                     ),
                   ),
                     
-                  
-                
-                
-
+               
                 Container(
                   decoration: BoxDecoration(
                     border : Border(top: BorderSide(color: Colors.grey[300]))
@@ -126,7 +120,7 @@ class _SignupState extends State<Signup> {
                   child: TextFormField(
                     controller: _confirmPass,
                     validator: (value){
-                    if(value != _pass.text){
+                    if(value != _pass.text && _pass.text.length >=6){
                         return 'Passwords do not match';
                       }
                     },
@@ -144,20 +138,11 @@ class _SignupState extends State<Signup> {
                     ),
                 ),
                 ),
-                    
                     ],
-              
-                    
-                    ),
-                  
-                  
+                    ),                  
                 ),
     );
-                    
-                  
-      
-           
-             
+                              
   }
   Widget _buildAddressField(){
     return FadeAnimation(1.8, Container(
@@ -190,7 +175,7 @@ class _SignupState extends State<Signup> {
                 ),
                 child:FlatButton(
                   onPressed: () {
-                    if(_formKey1.currentState.validate() && _formKey.currentState.validate() ){
+                    if(_formKey.currentState.validate() && _formKey1.currentState.validate() ){
                       
                       _formKey.currentState.save();
                       print("sign in button pressed");

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "628897381311",
+    "firebase_url": "https://one-stop-backend.firebaseio.com",
+    "project_id": "one-stop-backend",
+    "storage_bucket": "one-stop-backend.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:628897381311:android:146ca7aae24760fe89ff0a",
+        "android_cl ient_info": {
+          "package_name": "com.stratosphere.one_stop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "628897381311-nik31rr278mq9jbhuu1em6l3tb5no2hv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGMP9lVJlywfj39B1cKSi_yIpRtRcCZsA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "628897381311-nik31rr278mq9jbhuu1em6l3tb5no2hv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

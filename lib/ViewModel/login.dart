@@ -120,7 +120,7 @@ class _LoginscreenState extends State<Loginscreen> {
                   onPressed: () async{
                     AuthentificationService().loginwithEmail(email: _useremail.text, password: _pass.text);
                     print('Login button pressed');
-                    HomeView();
+                    PageTransition(child: HomeView(), type: PageTransitionType.fade);
                   },
                   child :Text('Sign in',
                   style: TextStyle(color : Colors.white.withOpacity(.7), fontSize: 20.0),

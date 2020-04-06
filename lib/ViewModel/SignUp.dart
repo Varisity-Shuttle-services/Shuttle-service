@@ -1,8 +1,15 @@
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:varisty_shuttle_service/Model/user.dart';
+import 'package:varisty_shuttle_service/Services/authentification_service.dart';
+import 'package:varisty_shuttle_service/Animations/FadeAnimation.dart';
 
-import 'Animations/FadeAnimation.dart';
+
+
+bool loading = false;
+User _user = User();
 
 class Signup extends StatefulWidget {
   @override
@@ -12,11 +19,13 @@ class Signup extends StatefulWidget {
 class _SignupState extends State<Signup> {
   final TextEditingController _pass = TextEditingController();
   final TextEditingController _confirmPass = TextEditingController();
+  final TextEditingController _useremail = TextEditingController();
+ TextEditingController _name = TextEditingController();
 
   final _formKey1 = GlobalKey<FormState>();
   final _formKey = GlobalKey<FormState>();
   String password;
-  String _email;
+  String error = '';
   final passwordValidator = MultiValidator([  
     RequiredValidator(errorText: 'password is required'),  
     MinLengthValidator(6, errorText: 'password must be at least 6 digits long'),  
@@ -34,6 +43,12 @@ class _SignupState extends State<Signup> {
                 color: Colors.white,
               ),
               child: TextField(
+                    controller: _name ,
+                    onChanged: (val) {
+                      setState(() {
+                        _user.displayName = _name.text;
+                      });
+                    },
                     keyboardType: TextInputType.emailAddress,
                     decoration : InputDecoration(
                       border: InputBorder.none,
@@ -61,6 +76,7 @@ class _SignupState extends State<Signup> {
               children: <Widget>[
                 Container(
                   child: TextFormField(
+                    controller: _useremail,
                     validator: emailValidator,
                     keyboardType: TextInputType.emailAddress,
                     decoration : InputDecoration(
@@ -102,7 +118,6 @@ class _SignupState extends State<Signup> {
                     obscureText: true,
                     onChanged: (val) => password = val,  
                     validator : passwordValidator,
-                    keyboardType: TextInputType.emailAddress,
                     decoration : InputDecoration(
                       border: InputBorder.none,
                       prefixIcon: 
@@ -165,6 +180,8 @@ class _SignupState extends State<Signup> {
                 ),
                 );
   }
+
+  
   Widget _buildSignIn(){
     return FadeAnimation(1.8, Center(
               child:  Container(
@@ -174,18 +191,19 @@ class _SignupState extends State<Signup> {
                   color: Colors.lightBlueAccent,
                 ),
                 child:FlatButton(
-                  onPressed: () {
+                  onPressed: () async{
                     if(_formKey.currentState.validate() && _formKey1.currentState.validate() ){
-                      
+                      setState(() => loading = true);
                       _formKey.currentState.save();
-                      print("sign in button pressed");
+
+                      AuthentificationService().signUpWithEmail(name : _user.displayName, email: _useremail.text, password: _pass.text);  
+                      
                     }
                   },
                   child :Text('Sign in',
                   style: TextStyle(color : Colors.white.withOpacity(.7), fontSize: 20.0),
                   ),
-                ),
-                
+                ), 
               ),
               ),
             );
@@ -195,6 +213,7 @@ class _SignupState extends State<Signup> {
 
   @override
   Widget build(BuildContext context) {
+    final double height = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: Color.fromRGBO(3,9,23,1),
       body:AnnotatedRegion<SystemUiOverlayStyle>(
@@ -204,7 +223,7 @@ class _SignupState extends State<Signup> {
         child: Stack(
           children: <Widget> [
         Container(
-          height : double.infinity,
+          height : height,
           child: SingleChildScrollView(
             physics : AlwaysScrollableScrollPhysics(),
             padding: EdgeInsets.symmetric(
@@ -241,3 +260,5 @@ class _SignupState extends State<Signup> {
   );  
   }
 }
+
+
